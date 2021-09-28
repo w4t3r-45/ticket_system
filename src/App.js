@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { test } from "./redux/actions/actions";
-import { Button } from "@mui/material";
+import { Button, CssBaseline } from "@mui/material";
+import Login from "./components/login";
 
 function App() {
   const dispatch = useDispatch(); //helper to dipatch actions
@@ -9,9 +10,11 @@ function App() {
   };
   return (
     <>
-      <Button variant="outlined" onClick={(event) => handleClick(event)}>
+      <CssBaseline />
+      {/* <Button variant="outlined" onClick={(event) => handleClick(event)}>
         Test redux
-      </Button>
+      </Button> */}
+      <Login />
     </>
   );
 }
