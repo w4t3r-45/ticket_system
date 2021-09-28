@@ -8,6 +8,9 @@ import {
 } from "@mui/material";
 import { Adb } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Form = styled("form")({
   display: "flex",
@@ -20,7 +23,31 @@ const Form = styled("form")({
 export default function Login(props) {
   //dispatch redux actions
   const dispatch = useDispatch();
+  //yup validation setup
+  const schema = yup.object({
+    email: yup
+      .string()
+      .email("Please Enter Valid Email.")
+      .required("Email is required."),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(7) //we can add REGEX by adding .matches("regular expression" , "error message to be shown")
+  });
+  //react hook form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schema)
+  });
 
+  //submit for our form
+  const submitForm = (data) => {
+    console.log("our data in this form are : ", data);
+  };
   return (
     <>
       <Box
@@ -77,8 +104,11 @@ export default function Login(props) {
                 borderRadius: "8px"
               }}
             >
-              <Form>
+              <Form onSubmit={handleSubmit((data) => submitForm(data))}>
                 <TextField
+                  {...register("email")}
+                  error={Boolean(errors.email)}
+                  helperText={Boolean(errors.email) && errors.email.message}
                   label="Email"
                   type="text"
                   size="small"
@@ -88,6 +118,11 @@ export default function Login(props) {
                   fullWidth
                 />
                 <TextField
+                  {...register("password")}
+                  error={Boolean(errors.password)}
+                  helperText={
+                    Boolean(errors.password) && errors.password.message
+                  }
                   label="Password"
                   type="password"
                   size="small"
@@ -96,7 +131,13 @@ export default function Login(props) {
                   }}
                   fullWidth
                 />
-                <Button variant="outlined" size="small" sx={{ width: "100%" }}>
+                <Button
+                  variant="contained"
+                  disableElevation
+                  size="small"
+                  type="submit"
+                  sx={{ width: "100%" }}
+                >
                   Login
                 </Button>
               </Form>
