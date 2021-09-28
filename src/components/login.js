@@ -28,7 +28,7 @@ export default function Login(props) {
     email: yup
       .string()
       .email("Please Enter Valid Email.")
-      .required("Email is required."),
+      .required("Email is required"),
     password: yup
       .string()
       .required("Password is required")
