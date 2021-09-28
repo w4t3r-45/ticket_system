@@ -1,5 +1,19 @@
+import { useSelector, useDispatch } from "react-redux";
+import { test } from "./redux/actions/actions";
+import { Button } from "@mui/material";
+
 function App() {
-  return <>hello world</>;
+  const dispatch = useDispatch(); //helper to dipatch actions
+  const handleClick = (event) => {
+    dispatch(test());
+  };
+  return (
+    <>
+      <Button variant="outlined" onClick={(event) => handleClick(event)}>
+        Test redux
+      </Button>
+    </>
+  );
 }
 
 export default App;
