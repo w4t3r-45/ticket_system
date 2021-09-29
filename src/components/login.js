@@ -4,7 +4,8 @@ import {
   Typography,
   styled,
   Button,
-  Paper
+  Paper,
+  CssBaseline
 } from "@mui/material";
 import { Adb } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,11 +51,12 @@ export default function Login(props) {
   };
   return (
     <>
+      <CssBaseline />
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ width: "100vw", height: "100vh", bgcolor: "#FBFBFB" }}
+        sx={{ width: "100vw", height: "100vh" }}
       >
         <Box sx={{ borderRadius: "15px", overflow: "hidden", height: "50%" }}>
           {/* //top box */}
@@ -99,7 +101,6 @@ export default function Login(props) {
                 position: "absolute",
                 left: "12%",
                 bottom: "40px",
-                bgcolor: "white",
                 width: "300px",
                 borderRadius: "8px"
               }}

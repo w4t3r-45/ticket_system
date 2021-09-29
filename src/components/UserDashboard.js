@@ -3,16 +3,17 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Box,
   Button,
   Avatar,
   Menu,
   MenuList,
   MenuItem,
-  ListItemText,
   ListItemIcon,
   IconButton,
   Tooltip,
+  Badge,
+  Box,
+  CssBaseline,
   Divider
 } from "@mui/material";
 import {
@@ -23,8 +24,11 @@ import {
   Settings,
   Logout
 } from "@mui/icons-material";
+//access theme object provided in our APP.JS
+import { useTheme } from "@mui/material/styles";
 
-export default function UserDashboard(props) {
+export default function UserDashboard({ props }) {
+  const theme = useTheme();
   const [ProfileAnchor, setProfileAnchor] = useState(null);
   const [NotifAnchor, setNotifAnchor] = useState(null);
 
@@ -43,8 +47,23 @@ export default function UserDashboard(props) {
 
   const openProfileMenu = Boolean(ProfileAnchor);
   const openNotifMenu = Boolean(NotifAnchor);
+
+  const boxStyle = {
+    width: 300,
+    height: 150,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    bgcolor: theme.palette.secondary.dark,
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(1)
+  };
   return (
     <>
+      {/* {console.log("Testing if we get current theme : ", theme)} */}
+      {/* css base line must be added here in order that our THEME works properly */}
+      <CssBaseline />
       <AppBar elevation={0}>
         <Toolbar>
           {/** i will change font of "body" typography when i use custom theming */}
@@ -52,11 +71,14 @@ export default function UserDashboard(props) {
             iReport System
           </Typography>
           <Button
-            color="info"
             variant="contained"
             disableElevation
+            disableRipple
             startIcon={<Add />}
             size="small"
+            sx={{
+              bgcolor: theme.palette.primary.dark
+            }}
           >
             New Ticket
           </Button>
@@ -74,10 +96,15 @@ export default function UserDashboard(props) {
                 }
               }}
             >
-              <Notifications
-                color="warning"
-                sx={{ width: "25px", height: "25px" }}
-              />
+              <Badge badgeContent={1000} color="error">
+                <Notifications
+                  sx={{
+                    width: "25px",
+                    height: "25px",
+                    color: theme.palette.success.light
+                  }}
+                />
+              </Badge>
             </IconButton>
           </Tooltip>
           <Menu
@@ -183,6 +210,77 @@ export default function UserDashboard(props) {
           </Menu>
         </Toolbar>
       </AppBar>
+      {/* need to include theming */}
+      <Box
+        sx={{
+          ...theme.mixins.toolbar
+        }}
+      />
+      <Box
+        display="flex"
+        justifyContent="space-around"
+        alignItems="center"
+        sx={{ mt: 4 }}
+      >
+        <Box sx={boxStyle}>
+          <Typography
+            variant="h6"
+            color={theme.palette.primary.contrastText}
+            fontWeight="bold"
+            sx={{ mb: 2 }}
+          >
+            Reported Tickets
+          </Typography>
+          <Divider flexItem />
+
+          <Typography
+            variant="h3"
+            color={theme.palette.primary.contrastText}
+            fontWeight="bold"
+            sx={{ mt: 2 }}
+          >
+            15
+          </Typography>
+        </Box>
+        <Box sx={boxStyle}>
+          <Typography
+            variant="h6"
+            color={theme.palette.primary.contrastText}
+            fontWeight="bold"
+            sx={{ mb: 2 }}
+          >
+            All Tickets
+          </Typography>
+          <Divider flexItem />
+          <Typography
+            variant="h3"
+            color={theme.palette.primary.contrastText}
+            fontWeight="bold"
+            sx={{ mt: 2 }}
+          >
+            5986
+          </Typography>
+        </Box>
+        <Box sx={boxStyle}>
+          <Typography
+            variant="h6"
+            color={theme.palette.primary.contrastText}
+            fontWeight="bold"
+            sx={{ mb: 2 }}
+          >
+            Queued Tickets
+          </Typography>
+          <Divider flexItem />
+          <Typography
+            variant="h3"
+            color={theme.palette.primary.contrastText}
+            fontWeight="bold"
+            sx={{ mt: 2 }}
+          >
+            3
+          </Typography>
+        </Box>
+      </Box>
     </>
   );
 }

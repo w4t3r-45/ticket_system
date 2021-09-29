@@ -1,7 +1,8 @@
 import constants from "../actions/constants";
 
 const INIT_STATE = {
-  test: "hello this is initial state"
+  test: "hello this is initial state",
+  theme: "rallyLight"
 };
 
 export const mainReducer = (state = INIT_STATE, action) => {
