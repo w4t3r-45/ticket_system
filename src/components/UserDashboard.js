@@ -14,8 +14,19 @@ import {
   Badge,
   Box,
   CssBaseline,
-  Divider
+  Divider,
+  Paper,
+  Table,
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableRow,
+  TableFooter,
+  styled
 } from "@mui/material";
+import { tableCellClasses } from "@mui/material/TableCell";
+import { tableRowClasses } from "@mui/material/TableRow";
 import {
   Add,
   Notifications,
@@ -55,10 +66,34 @@ export default function UserDashboard({ props }) {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    bgcolor: theme.palette.secondary.dark,
+    // bgcolor: theme.palette.secondary.dark,
+    bgcolor: theme.palette.secondary.light,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1)
   };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.grey[50],
+      fontWeight: "bold"
+    },
+    [`&.${tableCellClasses.body}`]: {
+      backgroundColor: theme.palette.grey[100]
+    }
+  }));
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    [`&.${tableRowClasses.root}`]: {
+      cursor: "pointer"
+    },
+    [`&.${tableRowClasses.hover}`]: {
+      [`&.${tableCellClasses.body}`]: {
+        backgroundColor: "red"
+      }
+    }
+  }));
+
   return (
     <>
       {/* {console.log("Testing if we get current theme : ", theme)} */}
@@ -180,6 +215,16 @@ export default function UserDashboard({ props }) {
                 }
               }}
             >
+              <Box sx={{ pl: 2, pb: 1 }}>
+                <Typography variant="subtitle1">Ait Chaabane Said</Typography>
+                <Typography
+                  variant="subtitle2"
+                  color={theme.palette.text.secondary}
+                >
+                  Employee - Admin
+                </Typography>
+              </Box>
+              <Divider />
               <MenuItem>
                 <ListItemIcon>
                   <Person fontSize="small" />
@@ -216,11 +261,12 @@ export default function UserDashboard({ props }) {
           ...theme.mixins.toolbar
         }}
       />
+      {/* cards Container */}
       <Box
         display="flex"
         justifyContent="space-around"
         alignItems="center"
-        sx={{ mt: 4 }}
+        sx={{ mt: 4, mb: 4 }}
       >
         <Box sx={boxStyle}>
           <Typography
@@ -281,6 +327,71 @@ export default function UserDashboard({ props }) {
           </Typography>
         </Box>
       </Box>
+      <Divider />
+      {/* Table Container */}
+      <TableContainer
+        component={Paper}
+        elevation={0}
+        sx={{
+          maxWidth: 1200,
+          mt: 4,
+          ml: "auto",
+          mr: "auto",
+          mb: 0
+        }}
+      >
+        <Table
+          sx={{
+            maxWidth: 1200,
+            margin: "auto"
+          }}
+          size="small"
+        >
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Ticket ID</StyledTableCell>
+              <StyledTableCell>Report Date</StyledTableCell>
+              <StyledTableCell>Ticket Title</StyledTableCell>
+              <StyledTableCell>Status</StyledTableCell>
+              <StyledTableCell>Closing Date</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <StyledTableCell>#4826</StyledTableCell>
+              <StyledTableCell>2021-06-11</StyledTableCell>
+              <StyledTableCell>
+                System is not respondingSystem is not respondingSystem is not
+                respondingSystem is not respondingSystem is not
+              </StyledTableCell>
+              <StyledTableCell>Pending</StyledTableCell>
+              <StyledTableCell>2021-06-12</StyledTableCell>
+            </TableRow>
+
+            <TableRow>
+              <StyledTableCell>#4826</StyledTableCell>
+              <StyledTableCell>2021-06-11</StyledTableCell>
+              <StyledTableCell>
+                System is not respondingSystem is not respondingSystem is not
+                respondingSystem is not respondingSystem is not
+              </StyledTableCell>
+              <StyledTableCell>Pending</StyledTableCell>
+              <StyledTableCell>2021-06-12</StyledTableCell>
+            </TableRow>
+
+            <StyledTableRow>
+              <StyledTableCell>#4826</StyledTableCell>
+              <StyledTableCell>2021-06-11</StyledTableCell>
+              <StyledTableCell>
+                System is not respondingSystem is not respondingSystem is not
+                respondingSystem is not respondingSystem is not
+              </StyledTableCell>
+              <StyledTableCell>Pending</StyledTableCell>
+              <StyledTableCell>2021-06-12</StyledTableCell>
+            </StyledTableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }
