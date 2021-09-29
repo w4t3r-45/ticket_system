@@ -8,6 +8,7 @@ import {
   Navigate
 } from "react-router-dom";
 import Login from "./components/login";
+import UserDashboard from "./components/UserDashboard";
 
 function App() {
   const dispatch = useDispatch(); //helper to dipatch actions
@@ -25,6 +26,7 @@ function App() {
           {/** setting default route as /login **/}
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
         </Routes>
       </Router>
     </>
