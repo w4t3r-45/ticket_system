@@ -109,11 +109,21 @@ export default function UserDashboard({ props }) {
     );
   };
 
+  // closing ctx menu
+
+  const handleCtxClose = (event) => {
+    setContextAnchor(null); //close menu
+    setSelectedID(null); //unselect current row
+  };
+  //row selected "change bgcolor"
+  const [selectedID, setSelectedID] = useState(null);
   // row click handler (ContextMenu "rightClick")
-  const handleRowclick = (event) => {
+  const handleRowclick = ({ event, index }) => {
     event.preventDefault();
+    console.log(event.currentTarget);
     setCtxCoord({ x: event.pageX, y: event.pageY });
     setContextAnchor(event.currentTarget);
+    setSelectedID(index);
   };
 
   const handleProfileClick = (event) => {
@@ -222,7 +232,7 @@ export default function UserDashboard({ props }) {
             onClose={handleNotifClose}
             anchorEl={NotifAnchor}
             PaperProps={{
-              elevation: 0.2
+              elevation: 1
             }}
             sx={{
               "& .MuiMenu-paper .MuiMenu-list": {
@@ -272,7 +282,7 @@ export default function UserDashboard({ props }) {
             onClose={handleProfileClose}
             anchorEl={ProfileAnchor}
             PaperProps={{
-              elevation: 0.2
+              elevation: 1
             }}
             sx={{
               "& .MuiMenu-paper .MuiMenu-list": {
@@ -435,8 +445,10 @@ export default function UserDashboard({ props }) {
             {dt.map((index, value) => (
               <StyledTableRow
                 hover
+                // we must pass row id to selected instead of index "next time"
+                selected={selectedID === index}
                 id={index}
-                onContextMenu={(event) => handleRowclick(event)}
+                onContextMenu={(event) => handleRowclick({ event, index })}
               >
                 <TableCell>#4826</TableCell>
                 <TableCell>2021-06-11</TableCell>
@@ -464,9 +476,9 @@ export default function UserDashboard({ props }) {
           vertical: "top",
           horizontal: "right"
         }}
-        onClose={(event) => setContextAnchor(null)}
+        onClose={(event) => handleCtxClose(event)}
         PaperProps={{
-          elevation: 0.2
+          elevation: 1
         }}
         sx={{
           "& .MuiMenu-paper .MuiMenu-list": {
