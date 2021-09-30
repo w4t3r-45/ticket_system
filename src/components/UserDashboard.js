@@ -23,7 +23,8 @@ import {
   TableCell,
   TableRow,
   TableFooter,
-  styled
+  styled,
+  ListItemText
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { tableRowClasses } from "@mui/material/TableRow";
@@ -33,7 +34,10 @@ import {
   Info,
   Person,
   Settings,
-  Logout
+  Logout,
+  StackedBarChart,
+  Cancel,
+  ChromeReaderMode
 } from "@mui/icons-material";
 //access theme object provided in our APP.JS
 import { useTheme } from "@mui/material/styles";
@@ -42,6 +46,75 @@ export default function UserDashboard({ props }) {
   const theme = useTheme();
   const [ProfileAnchor, setProfileAnchor] = useState(null);
   const [NotifAnchor, setNotifAnchor] = useState(null);
+
+  // CUSTOM CONTEXT MENU LOGIC
+  const [ctxCoord, setCtxCoord] = useState({ x: 0, y: 0 });
+  const [ctxAnchor, setContextAnchor] = useState(null);
+  // CUSTOM CONTEXT MENU (WILL PASS ROW ID AS A PROP TO HELP ME LATER )
+  const CtxMenu = () => {
+    return (
+      <MenuList
+        sx={{
+          pt: 0,
+          pb: 0,
+          "&.MuiTouchRipple-root": {
+            padding: 0
+          }
+        }}
+      >
+        <MenuItem>
+          <ListItemText>
+            <Typography variant="body2" color="text.main">
+              Expand Details
+            </Typography>
+          </ListItemText>
+          <ChromeReaderMode
+            sx={{ color: theme.palette.warning.light, ml: 1 }}
+          />
+        </MenuItem>
+        <Divider
+          light
+          sx={{
+            "&.MuiDivider-root": {
+              margin: 0
+            }
+          }}
+        />
+        <MenuItem>
+          <ListItemText>
+            <Typography variant="body2" color="text.main">
+              Category Analytics
+            </Typography>
+          </ListItemText>
+          <StackedBarChart sx={{ color: theme.palette.success.main, ml: 1 }} />
+        </MenuItem>
+        <Divider
+          light
+          sx={{
+            "&.MuiDivider-root": {
+              margin: 0
+            }
+          }}
+        />
+
+        <MenuItem>
+          <ListItemText>
+            <Typography variant="body2" color="text.main">
+              Cancel Ticket
+            </Typography>
+          </ListItemText>
+          <Cancel sx={{ color: theme.palette.error.dark, ml: 1 }} />
+        </MenuItem>
+      </MenuList>
+    );
+  };
+
+  // row click handler (ContextMenu "rightClick")
+  const handleRowclick = (event) => {
+    event.preventDefault();
+    setCtxCoord({ x: event.pageX, y: event.pageY });
+    setContextAnchor(event.currentTarget);
+  };
 
   const handleProfileClick = (event) => {
     setProfileAnchor(event.currentTarget);
@@ -85,14 +158,16 @@ export default function UserDashboard({ props }) {
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
-      cursor: "pointer"
+      cursor: "pointer",
+      backgroundColor: theme.palette.grey[50]
     },
-    [`&.${tableRowClasses.hover}`]: {
-      [`&.${tableCellClasses.body}`]: {
-        backgroundColor: "red"
-      }
+    [`&.${tableRowClasses.selected}`]: {
+      backgroundColor: theme.palette.secondary.light
     }
   }));
+
+  // test purpose (render table rows)
+  const dt = [0, 1, 2, 3];
 
   return (
     <>
@@ -357,41 +432,50 @@ export default function UserDashboard({ props }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <StyledTableCell>#4826</StyledTableCell>
-              <StyledTableCell>2021-06-11</StyledTableCell>
-              <StyledTableCell>
-                System is not respondingSystem is not respondingSystem is not
-                respondingSystem is not respondingSystem is not
-              </StyledTableCell>
-              <StyledTableCell>Pending</StyledTableCell>
-              <StyledTableCell>2021-06-12</StyledTableCell>
-            </TableRow>
-
-            <TableRow>
-              <StyledTableCell>#4826</StyledTableCell>
-              <StyledTableCell>2021-06-11</StyledTableCell>
-              <StyledTableCell>
-                System is not respondingSystem is not respondingSystem is not
-                respondingSystem is not respondingSystem is not
-              </StyledTableCell>
-              <StyledTableCell>Pending</StyledTableCell>
-              <StyledTableCell>2021-06-12</StyledTableCell>
-            </TableRow>
-
-            <StyledTableRow>
-              <StyledTableCell>#4826</StyledTableCell>
-              <StyledTableCell>2021-06-11</StyledTableCell>
-              <StyledTableCell>
-                System is not respondingSystem is not respondingSystem is not
-                respondingSystem is not respondingSystem is not
-              </StyledTableCell>
-              <StyledTableCell>Pending</StyledTableCell>
-              <StyledTableCell>2021-06-12</StyledTableCell>
-            </StyledTableRow>
+            {dt.map((index, value) => (
+              <StyledTableRow
+                hover
+                id={index}
+                onContextMenu={(event) => handleRowclick(event)}
+              >
+                <TableCell>#4826</TableCell>
+                <TableCell>2021-06-11</TableCell>
+                <TableCell>
+                  System is not respondingSystem is not respondingSystem is not
+                  respondingSystem is not respondingSystem is not
+                </TableCell>
+                <TableCell>Pending</TableCell>
+                <TableCell>2021-06-12</TableCell>
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
+      {/* context menu */}
+      <Menu
+        open={Boolean(ctxAnchor)}
+        anchorReference="anchorPosition"
+        anchorPosition={{ top: ctxCoord.y, left: ctxCoord.x }}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        onClose={(event) => setContextAnchor(null)}
+        PaperProps={{
+          elevation: 0.2
+        }}
+        sx={{
+          "& .MuiMenu-paper .MuiMenu-list": {
+            padding: 0
+          }
+        }}
+      >
+        <CtxMenu />
+      </Menu>
     </>
   );
 }
