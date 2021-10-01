@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import Login from "./components/login";
 import UserDashboard from "./components/UserDashboard";
-import { rallyDark, rallyLight } from "./themes/rallyTheme";
+import { rallyLight } from "./themes/rallyTheme";
 
 function App() {
   const dispatch = useDispatch(); //helper to dipatch actions

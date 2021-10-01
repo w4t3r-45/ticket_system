@@ -24,7 +24,8 @@ import {
   TableRow,
   TableFooter,
   styled,
-  ListItemText
+  ListItemText,
+  Container
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { tableRowClasses } from "@mui/material/TableRow";
@@ -37,7 +38,10 @@ import {
   Logout,
   StackedBarChart,
   Cancel,
-  ChromeReaderMode
+  ChromeReaderMode,
+  BugReport,
+  AllInbox,
+  Cached
 } from "@mui/icons-material";
 //access theme object provided in our APP.JS
 import { useTheme } from "@mui/material/styles";
@@ -68,9 +72,7 @@ export default function UserDashboard({ props }) {
               Expand Details
             </Typography>
           </ListItemText>
-          <ChromeReaderMode
-            sx={{ color: theme.palette.warning.light, ml: 1 }}
-          />
+          <ChromeReaderMode sx={{ color: theme.palette.primary.main, ml: 1 }} />
         </MenuItem>
         <Divider
           light
@@ -86,7 +88,7 @@ export default function UserDashboard({ props }) {
               Category Analytics
             </Typography>
           </ListItemText>
-          <StackedBarChart sx={{ color: theme.palette.success.main, ml: 1 }} />
+          <StackedBarChart sx={{ color: theme.palette.primary.main, ml: 1 }} />
         </MenuItem>
         <Divider
           light
@@ -103,7 +105,7 @@ export default function UserDashboard({ props }) {
               Cancel Ticket
             </Typography>
           </ListItemText>
-          <Cancel sx={{ color: theme.palette.error.dark, ml: 1 }} />
+          <Cancel sx={{ color: theme.palette.primary.main, ml: 1 }} />
         </MenuItem>
       </MenuList>
     );
@@ -120,7 +122,6 @@ export default function UserDashboard({ props }) {
   // row click handler (ContextMenu "rightClick")
   const handleRowclick = ({ event, index }) => {
     event.preventDefault();
-    console.log(event.currentTarget);
     setCtxCoord({ x: event.pageX, y: event.pageY });
     setContextAnchor(event.currentTarget);
     setSelectedID(index);
@@ -143,21 +144,16 @@ export default function UserDashboard({ props }) {
   const openNotifMenu = Boolean(NotifAnchor);
 
   const boxStyle = {
-    width: 300,
-    height: 150,
+    minWidth: 230,
+    height: 80,
+    ml: 2,
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    // bgcolor: theme.palette.secondary.dark,
-    bgcolor: theme.palette.secondary.light,
-    borderRadius: theme.shape.borderRadius,
-    padding: theme.spacing(1)
+    borderRadius: theme.shape.borderRadius
   };
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
       color: theme.palette.grey[50],
       fontWeight: "bold"
     },
@@ -184,11 +180,15 @@ export default function UserDashboard({ props }) {
       {/* {console.log("Testing if we get current theme : ", theme)} */}
       {/* css base line must be added here in order that our THEME works properly */}
       <CssBaseline />
-      <AppBar elevation={0}>
+      <AppBar elevation={3}>
         <Toolbar>
           {/** i will change font of "body" typography when i use custom theming */}
-          <Typography variant="body" sx={{ flexGrow: 1 }} letterSpacing={1}>
-            iReport System
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1, textTransform: "none", color: "#000" }}
+            letterSpacing={2}
+          >
+            iREPORT-SYSTEM
           </Typography>
           <Button
             variant="contained"
@@ -197,7 +197,8 @@ export default function UserDashboard({ props }) {
             startIcon={<Add />}
             size="small"
             sx={{
-              bgcolor: theme.palette.primary.dark
+              bgcolor: theme.palette.primary.main,
+              color: "#fff"
             }}
           >
             New Ticket
@@ -221,7 +222,7 @@ export default function UserDashboard({ props }) {
                   sx={{
                     width: "25px",
                     height: "25px",
-                    color: theme.palette.success.light
+                    color: theme.palette.primary.main
                   }}
                 />
               </Badge>
@@ -332,7 +333,11 @@ export default function UserDashboard({ props }) {
                 size="small"
                 variant="contained"
                 endIcon={<Logout />}
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  bgcolor: theme.palette.primary.main,
+                  color: "#fff"
+                }}
               >
                 Log Out
               </Button>
@@ -349,67 +354,150 @@ export default function UserDashboard({ props }) {
       {/* cards Container */}
       <Box
         display="flex"
-        justifyContent="space-around"
+        justifyContent="center"
         alignItems="center"
-        sx={{ mt: 4, mb: 4 }}
+        sx={{ mt: 7, mb: 4 }}
       >
-        <Box sx={boxStyle}>
-          <Typography
-            variant="h6"
-            color={theme.palette.primary.contrastText}
-            fontWeight="bold"
-            sx={{ mb: 2 }}
+        <Box component={Paper} sx={boxStyle}>
+          {/* left box */}
+          <Box sx={{ width: 60, position: "relative" }}>
+            <Box
+              component={Paper}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                position: "absolute",
+                bgcolor: "#FCD42B",
+                top: -25,
+                left: 15,
+                width: 70,
+                height: 60,
+                borderRadius: theme.shape.borderRadius
+              }}
+            >
+              <BugReport sx={{ width: 50, height: 50, color: "#fff" }} />
+            </Box>
+          </Box>
+          {/* right box */}
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            sx={{
+              flexGrow: 1,
+              pr: 1,
+              pt: 1,
+              borderRadius: theme.shape.borderRadius
+            }}
           >
-            Reported Tickets
-          </Typography>
-          <Divider flexItem />
+            <Box>
+              <Typography
+                variant="subtitle2"
+                fontWeight="bold"
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                Reported Tickets
+              </Typography>
 
-          <Typography
-            variant="h3"
-            color={theme.palette.primary.contrastText}
-            fontWeight="bold"
-            sx={{ mt: 2 }}
-          >
-            15
-          </Typography>
+              <Typography variant="subtitle1" fontWeight="bold">
+                15
+              </Typography>
+            </Box>
+          </Box>
         </Box>
-        <Box sx={boxStyle}>
-          <Typography
-            variant="h6"
-            color={theme.palette.primary.contrastText}
-            fontWeight="bold"
-            sx={{ mb: 2 }}
+        <Box component={Paper} sx={boxStyle}>
+          {/* left box */}
+          <Box sx={{ width: 60, position: "relative" }}>
+            <Box
+              component={Paper}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                position: "absolute",
+                bgcolor: "#291B4F",
+                top: -25,
+                left: 15,
+                width: 70,
+                height: 60,
+                borderRadius: theme.shape.borderRadius
+              }}
+            >
+              <AllInbox sx={{ width: 50, height: 50, color: "#fff" }} />
+            </Box>
+          </Box>
+          {/* right box */}
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            sx={{
+              flexGrow: 1,
+              pr: 1,
+              pt: 1,
+              borderRadius: theme.shape.borderRadius
+            }}
           >
-            All Tickets
-          </Typography>
-          <Divider flexItem />
-          <Typography
-            variant="h3"
-            color={theme.palette.primary.contrastText}
-            fontWeight="bold"
-            sx={{ mt: 2 }}
-          >
-            5986
-          </Typography>
+            <Box>
+              <Typography
+                variant="subtitle2"
+                fontWeight="bold"
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                All Tickets
+              </Typography>
+
+              <Typography variant="subtitle1" fontWeight="bold">
+                28258
+              </Typography>
+            </Box>
+          </Box>
         </Box>
-        <Box sx={boxStyle}>
-          <Typography
-            variant="h6"
-            color={theme.palette.primary.contrastText}
-            fontWeight="bold"
-            sx={{ mb: 2 }}
+        <Box component={Paper} sx={boxStyle}>
+          {/* left box */}
+          <Box sx={{ width: 60, position: "relative" }}>
+            <Box
+              component={Paper}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                position: "absolute",
+                bgcolor: "#CEEAE6",
+                top: -25,
+                left: 15,
+                width: 70,
+                height: 60,
+                borderRadius: theme.shape.borderRadius
+              }}
+            >
+              <Cached sx={{ width: 50, height: 50, color: "#fff" }} />
+            </Box>
+          </Box>
+          {/* right box */}
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            sx={{
+              flexGrow: 1,
+              pr: 1,
+              pt: 1,
+              borderRadius: theme.shape.borderRadius
+            }}
           >
-            Queued Tickets
-          </Typography>
-          <Divider flexItem />
-          <Typography
-            variant="h3"
-            color={theme.palette.primary.contrastText}
-            fontWeight="bold"
-            sx={{ mt: 2 }}
-          >
-            3
-          </Typography>
+            <Box>
+              <Typography
+                variant="subtitle2"
+                fontWeight="bold"
+                sx={{ color: theme.palette.text.disabled }}
+              >
+                Queued Tickets
+              </Typography>
+
+              <Typography variant="subtitle1" fontWeight="bold">
+                8
+              </Typography>
+            </Box>
+          </Box>
         </Box>
       </Box>
       <Divider />
