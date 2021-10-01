@@ -18,7 +18,7 @@ import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { closeNewTicket } from "../redux/actions/actions";
 import HeadShake from "react-reveal/HeadShake";
-import { useDropzone } from "react-dropzone";
+import Dropzone from "./dropzone";
 
 export default function NewTicket(props) {
   const theme = useTheme();
@@ -135,13 +135,29 @@ export default function NewTicket(props) {
 
                 <TextField
                   size="small"
-                  sx={{ mb: 2 }}
+                  sx={{
+                    "& .MuiOutlinedInput-input": {
+                      "&::-webkit-scrollbar": {
+                        width: 7
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        backgroundColor: "rgba(0,0,0,0.1)",
+                        borderRadius: "100px"
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0,0,0,0.25)",
+                        borderRadius: "100px"
+                      }
+                    },
+                    mb: 1
+                  }}
                   fullWidth
                   multiline
                   maxRows={5}
                   label="Description"
                   key="x12asasaf3"
                 />
+                <Dropzone />
                 <Divider>Please Be Sure Of Your Entered Informations</Divider>
                 <Button
                   variant="outlined"
