@@ -25,7 +25,7 @@ import {
   TableFooter,
   styled,
   ListItemText,
-  Container
+  Pagination
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { tableRowClasses } from "@mui/material/TableRow";
@@ -302,7 +302,12 @@ export default function UserDashboard({ props }) {
                 }
               }}
             >
-              <Avatar sx={{ width: "25px", height: "25px" }}>S</Avatar>
+              <Avatar
+                src="https://images.generated.photos/akQgTukZszRH7PYXar_nlgLB65YysXEBMfnDFFay9BI/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvZWRkZjFk/ZjMtODNjZC00NWU0/LTlkMzMtMThmOGM0/ZmE5NTliLmpwZw.jpg"
+                sx={{ width: 35, height: 35, ml: 1 }}
+              >
+                S
+              </Avatar>
             </IconButton>
           </Tooltip>
           <Menu
@@ -537,7 +542,11 @@ export default function UserDashboard({ props }) {
           mt: 4,
           ml: "auto",
           mr: "auto",
-          mb: 0
+          mb: 0,
+          bgcolor: "transparent",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
         }}
       >
         <Table
@@ -577,6 +586,7 @@ export default function UserDashboard({ props }) {
             ))}
           </TableBody>
         </Table>
+        <Pagination count={10} sx={{ mt: 1 }} />
       </TableContainer>
       {/* context menu */}
       <Menu
