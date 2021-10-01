@@ -45,6 +45,10 @@ import {
 } from "@mui/icons-material";
 //access theme object provided in our APP.JS
 import { useTheme } from "@mui/material/styles";
+// need to revisit notifications "not finished yet"
+import Notification from "./Notification";
+// testing animation with react-reveal
+import { Fade } from "react-reveal";
 
 export default function UserDashboard({ props }) {
   const theme = useTheme();
@@ -390,147 +394,153 @@ export default function UserDashboard({ props }) {
         alignItems="center"
         sx={{ mt: 7, mb: 4 }}
       >
-        <Box component={Paper} sx={boxStyle}>
-          {/* left box */}
-          <Box sx={{ width: 60, position: "relative" }}>
+        <Fade left>
+          <Box component={Paper} sx={boxStyle}>
+            {/* left box */}
+            <Box sx={{ width: 60, position: "relative" }}>
+              <Box
+                component={Paper}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  position: "absolute",
+                  bgcolor: "#FCD42B",
+                  top: -25,
+                  left: 15,
+                  width: 90,
+                  height: 60,
+                  borderRadius: theme.shape.borderRadius
+                }}
+              >
+                <BugReport sx={{ width: 50, height: 50, color: "#fff" }} />
+              </Box>
+            </Box>
+            {/* right box */}
             <Box
-              component={Paper}
               display="flex"
-              justifyContent="center"
-              alignItems="center"
+              justifyContent="flex-end"
               sx={{
-                position: "absolute",
-                bgcolor: "#FCD42B",
-                top: -25,
-                left: 15,
-                width: 90,
-                height: 60,
+                flexGrow: 1,
+                pr: 1,
+                pt: 1,
                 borderRadius: theme.shape.borderRadius
               }}
             >
-              <BugReport sx={{ width: 50, height: 50, color: "#fff" }} />
-            </Box>
-          </Box>
-          {/* right box */}
-          <Box
-            display="flex"
-            justifyContent="flex-end"
-            sx={{
-              flexGrow: 1,
-              pr: 1,
-              pt: 1,
-              borderRadius: theme.shape.borderRadius
-            }}
-          >
-            <Box>
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                sx={{ color: theme.palette.text.disabled }}
-              >
-                Reported Tickets
-              </Typography>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  fontWeight="bold"
+                  sx={{ color: theme.palette.text.disabled }}
+                >
+                  Reported Tickets
+                </Typography>
 
-              <Typography variant="subtitle1" fontWeight="bold">
-                15
-              </Typography>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  15
+                </Typography>
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <Box component={Paper} sx={boxStyle}>
-          {/* left box */}
-          <Box sx={{ width: 60, position: "relative" }}>
+        </Fade>
+        <Fade bottom>
+          <Box component={Paper} sx={boxStyle}>
+            {/* left box */}
+            <Box sx={{ width: 60, position: "relative" }}>
+              <Box
+                component={Paper}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  position: "absolute",
+                  bgcolor: "#291B4F",
+                  top: -25,
+                  left: 15,
+                  width: 90,
+                  height: 60,
+                  borderRadius: theme.shape.borderRadius
+                }}
+              >
+                <AllInbox sx={{ width: 50, height: 50, color: "#fff" }} />
+              </Box>
+            </Box>
+            {/* right box */}
             <Box
-              component={Paper}
               display="flex"
-              justifyContent="center"
-              alignItems="center"
+              justifyContent="flex-end"
               sx={{
-                position: "absolute",
-                bgcolor: "#291B4F",
-                top: -25,
-                left: 15,
-                width: 90,
-                height: 60,
+                flexGrow: 1,
+                pr: 1,
+                pt: 1,
                 borderRadius: theme.shape.borderRadius
               }}
             >
-              <AllInbox sx={{ width: 50, height: 50, color: "#fff" }} />
-            </Box>
-          </Box>
-          {/* right box */}
-          <Box
-            display="flex"
-            justifyContent="flex-end"
-            sx={{
-              flexGrow: 1,
-              pr: 1,
-              pt: 1,
-              borderRadius: theme.shape.borderRadius
-            }}
-          >
-            <Box>
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                sx={{ color: theme.palette.text.disabled }}
-              >
-                All Tickets
-              </Typography>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  fontWeight="bold"
+                  sx={{ color: theme.palette.text.disabled }}
+                >
+                  All Tickets
+                </Typography>
 
-              <Typography variant="subtitle1" fontWeight="bold">
-                28258
-              </Typography>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  28258
+                </Typography>
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <Box component={Paper} sx={boxStyle}>
-          {/* left box */}
-          <Box sx={{ width: 60, position: "relative" }}>
+        </Fade>
+        <Fade right>
+          <Box component={Paper} sx={boxStyle}>
+            {/* left box */}
+            <Box sx={{ width: 60, position: "relative" }}>
+              <Box
+                component={Paper}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  position: "absolute",
+                  bgcolor: "#CEEAE6",
+                  top: -25,
+                  left: 15,
+                  width: 90,
+                  height: 60,
+                  borderRadius: theme.shape.borderRadius
+                }}
+              >
+                <Cached sx={{ width: 50, height: 50, color: "#fff" }} />
+              </Box>
+            </Box>
+            {/* right box */}
             <Box
-              component={Paper}
               display="flex"
-              justifyContent="center"
-              alignItems="center"
+              justifyContent="flex-end"
               sx={{
-                position: "absolute",
-                bgcolor: "#CEEAE6",
-                top: -25,
-                left: 15,
-                width: 90,
-                height: 60,
+                flexGrow: 1,
+                pr: 1,
+                pt: 1,
                 borderRadius: theme.shape.borderRadius
               }}
             >
-              <Cached sx={{ width: 50, height: 50, color: "#fff" }} />
-            </Box>
-          </Box>
-          {/* right box */}
-          <Box
-            display="flex"
-            justifyContent="flex-end"
-            sx={{
-              flexGrow: 1,
-              pr: 1,
-              pt: 1,
-              borderRadius: theme.shape.borderRadius
-            }}
-          >
-            <Box>
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                sx={{ color: theme.palette.text.disabled }}
-              >
-                Queued Tickets
-              </Typography>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  fontWeight="bold"
+                  sx={{ color: theme.palette.text.disabled }}
+                >
+                  Queued Tickets
+                </Typography>
 
-              <Typography variant="subtitle1" fontWeight="bold">
-                8
-              </Typography>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  8
+                </Typography>
+              </Box>
             </Box>
           </Box>
-        </Box>
+        </Fade>
       </Box>
       <Divider />
       {/* Table Container */}
@@ -552,6 +562,7 @@ export default function UserDashboard({ props }) {
         <Table
           sx={{
             maxWidth: 1200,
+            minWidth: 800,
             margin: "auto"
           }}
           size="small"
@@ -613,6 +624,8 @@ export default function UserDashboard({ props }) {
       >
         <CtxMenu />
       </Menu>
+      {/* Notifications test */}
+      <Notification />
     </>
   );
 }
