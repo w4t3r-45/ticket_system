@@ -6,3 +6,15 @@ export const test = (data) => {
     payload: data
   };
 };
+
+export const openNewTicket = () => {
+  return {
+    type: constants.OPEN_NEW_TICKET
+  };
+};
+
+export const closeNewTicket = () => {
+  return {
+    type: constants.CLOSE_NEW_TICKET
+  };
+};

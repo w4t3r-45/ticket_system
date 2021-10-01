@@ -47,11 +47,20 @@ import {
 import { useTheme } from "@mui/material/styles";
 // need to revisit notifications "not finished yet"
 import Notification from "./Notification";
+import NewTicket from "./NewTicket";
+import { openNewTicket } from "../redux/actions/actions";
+import { useDispatch } from "react-redux";
 // testing animation with react-reveal
 import { Fade } from "react-reveal";
 
 export default function UserDashboard({ props }) {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  // new ticket form logic
+  const handleNewTktClick = (event) => {
+    dispatch(openNewTicket());
+  };
+
   const [ProfileAnchor, setProfileAnchor] = useState(null);
   const [NotifAnchor, setNotifAnchor] = useState(null);
 
@@ -204,6 +213,7 @@ export default function UserDashboard({ props }) {
               bgcolor: theme.palette.primary.main,
               color: "#fff"
             }}
+            onClick={(event) => handleNewTktClick(event)}
           >
             New Ticket
           </Button>
@@ -626,6 +636,8 @@ export default function UserDashboard({ props }) {
       </Menu>
       {/* Notifications test */}
       <Notification />
+      {/* modal form "ADD NEW TICKET" */}
+      <NewTicket />
     </>
   );
 }
