@@ -11,7 +11,8 @@ export const rallyLight = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#291B4F"
+      main: "#291B4F",
+      light: "#ece7f7"
     },
     secondary: {
       main: "#291B4F" //will change it soon
@@ -94,5 +95,11 @@ export const rallyLight = createTheme({
   },
   shape: {
     borderRadius: 2
-  }
+  },
+  shadows: [
+    "none", //elevation(0) represented by shadows[0]
+    "0px 2px 1px -10px rgba(0,0,0,0.1),0px 1px 2px 0px rgba(0,0,0,0.1),0px 1px 2px 0px rgba(0,0,0,0.1)", //elevation(1)
+    "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)", //elevation(2)
+    "0px 3px 10px -20px rgba(0,0,0,0.1),0px 3px 20px 0px rgba(0,0,0,0.1),0px 1px 10px 0px rgba(0,0,0,0.1)" //elevation(3)
+  ]
 });

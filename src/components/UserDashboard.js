@@ -168,7 +168,7 @@ export default function UserDashboard({ props }) {
       backgroundColor: theme.palette.grey[50]
     },
     [`&.${tableRowClasses.selected}`]: {
-      backgroundColor: theme.palette.secondary.light
+      backgroundColor: theme.palette.primary.light
     }
   }));
 
@@ -217,7 +217,7 @@ export default function UserDashboard({ props }) {
                 }
               }}
             >
-              <Badge badgeContent={1000} color="error">
+              <Badge badgeContent={25} color="error">
                 <Notifications
                   sx={{
                     width: "25px",
@@ -257,6 +257,33 @@ export default function UserDashboard({ props }) {
                 </ListItemIcon>
                 <Typography variant="body2" noWrap>
                   Ticket #9756 response
+                </Typography>
+              </MenuItem>
+              {/* second notif */}
+              <MenuItem>
+                <ListItemIcon>
+                  <Info fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2" noWrap>
+                  Ticket #4523 rejected
+                </Typography>
+              </MenuItem>
+              {/* third notif */}
+              <MenuItem>
+                <ListItemIcon>
+                  <Info fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2" noWrap>
+                  Ticket #1148 Hold
+                </Typography>
+              </MenuItem>
+              {/* fourth notif */}
+              <MenuItem>
+                <ListItemIcon>
+                  <Info fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="body2" noWrap>
+                  Ticket #9968 response
                 </Typography>
               </MenuItem>
             </MenuList>
@@ -371,7 +398,7 @@ export default function UserDashboard({ props }) {
                 bgcolor: "#FCD42B",
                 top: -25,
                 left: 15,
-                width: 70,
+                width: 90,
                 height: 60,
                 borderRadius: theme.shape.borderRadius
               }}
@@ -418,7 +445,7 @@ export default function UserDashboard({ props }) {
                 bgcolor: "#291B4F",
                 top: -25,
                 left: 15,
-                width: 70,
+                width: 90,
                 height: 60,
                 borderRadius: theme.shape.borderRadius
               }}
@@ -465,7 +492,7 @@ export default function UserDashboard({ props }) {
                 bgcolor: "#CEEAE6",
                 top: -25,
                 left: 15,
-                width: 70,
+                width: 90,
                 height: 60,
                 borderRadius: theme.shape.borderRadius
               }}
