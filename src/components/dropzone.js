@@ -5,7 +5,16 @@ import { useTheme } from "@mui/material/styles";
 
 export default function Dropzone(props) {
   const theme = useTheme();
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  // size validator for
+  const {
+    acceptedFiles,
+    fileRejections,
+    getRootProps,
+    getInputProps
+  } = useDropzone({
+    accept: "image/jpeg,image/png,video/mp4,application/pdf"
+    // validator: sizeValidator
+  });
 
   // file size calculation
 
@@ -26,6 +35,9 @@ export default function Dropzone(props) {
       {file.path} - {returnFileSize(file.size)}
     </li>
   ));
+
+  // rejected files
+  const rejectedFiles = fileRejections.length;
 
   return (
     <>
@@ -59,6 +71,7 @@ export default function Dropzone(props) {
       <Box sx={{ mb: 2 }}>
         <Typography variant="subtitle2">Selected Files :</Typography>
         {files}
+        <p>{rejectedFiles}</p>
       </Box>
     </>
   );

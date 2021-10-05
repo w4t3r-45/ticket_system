@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Login from "./components/login";
 import UserDashboard from "./components/UserDashboard";
+import AdminDashboard from "./components/adminDashboard";
 import { rallyLight } from "./themes/rallyTheme";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<UserDashboard />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Router>
       </ThemeProvider>

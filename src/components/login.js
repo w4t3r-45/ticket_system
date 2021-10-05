@@ -8,6 +8,7 @@ import {
   CssBaseline
 } from "@mui/material";
 import { Adb } from "@mui/icons-material";
+import { useTheme } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -22,6 +23,8 @@ const Form = styled("form")({
 });
 
 export default function Login(props) {
+  // theme
+  const theme = useTheme();
   //dispatch redux actions
   const dispatch = useDispatch();
   //yup validation setup
@@ -68,7 +71,7 @@ export default function Login(props) {
             sx={{
               width: "400px", //total width
               height: "70%",
-              bgcolor: "#4475F0", //blue
+              bgcolor: theme.palette.primary.main, //blue
               padding: "20px"
             }}
           >
