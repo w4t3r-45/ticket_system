@@ -25,7 +25,12 @@ import {
   TableFooter,
   styled,
   ListItemText,
-  Pagination
+  Pagination,
+  Drawer,
+  List,
+  ListItem,
+  Collapse,
+  ListItemButton
 } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { tableRowClasses } from "@mui/material/TableRow";
@@ -41,13 +46,18 @@ import {
   ChromeReaderMode,
   BugReport,
   AllInbox,
-  Cached
+  Cached,
+  ConfirmationNumber,
+  ExpandLess,
+  ExpandMore,
+  Group,
+  AdminPanelSettings,
+  AssignmentInd
 } from "@mui/icons-material";
 //access theme object provided in our APP.JS
 import { useTheme } from "@mui/material/styles";
 // need to revisit notifications "not finished yet"
 import Notification from "./Notification";
-import NewTicket from "./NewTicket";
 import Card from "./Card";
 import { openNewTicket } from "../redux/actions/actions";
 import { useDispatch } from "react-redux";
@@ -181,35 +191,23 @@ export default function AdminDashboard({ props }) {
   // test purpose (render table rows)
   const dt = [0, 1, 2, 3];
 
+  //Drawer style
+  const DrawerWidth = 250;
+  const [openDrawerMenu, setOpenDrawerMenu] = useState(false);
+  const handleOpenDrawerMenu = (event) => {
+    setOpenDrawerMenu(!openDrawerMenu);
+  };
+
   return (
     <>
       {/* {console.log("Testing if we get current theme : ", theme)} */}
       {/* css base line must be added here in order that our THEME works properly */}
       <CssBaseline />
       <AppBar elevation={3}>
-        <Toolbar>
+        <Toolbar disableGutters>
           {/** i will change font of "body" typography when i use custom theming */}
-          <Typography
-            variant="h6"
-            sx={{ flexGrow: 1, textTransform: "none", color: "#000" }}
-            letterSpacing={2}
-          >
-            iREPORT-SYSTEM
-          </Typography>
-          <Button
-            variant="contained"
-            disableElevation
-            disableRipple
-            startIcon={<Add />}
-            size="small"
-            sx={{
-              bgcolor: theme.palette.primary.main,
-              color: "#fff"
-            }}
-            onClick={(event) => handleNewTktClick(event)}
-          >
-            New Ticket
-          </Button>
+          <Box sx={{ width: DrawerWidth, flexGrow: 1 }}></Box>
+
           {/*  notification menu */}
           <Tooltip title="Notification">
             <IconButton
@@ -304,6 +302,7 @@ export default function AdminDashboard({ props }) {
               onClick={(event) => handleProfileClick(event)}
               sx={{
                 ml: 1,
+                mr: 2,
                 "&.MuiButtonBase-root:hover": {
                   bgcolor: "transparent"
                 }
@@ -390,124 +389,198 @@ export default function AdminDashboard({ props }) {
           ...theme.mixins.toolbar
         }}
       />
-      {/* cards Container */}
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ mt: 7, mb: 4 }}
-      >
-        <Fade left>
-          <Card
-            Icon={BugReport}
-            color="#FCD42B"
-            title="Reported Tickets"
-            value={"15"}
-          />
-        </Fade>
-        <Fade bottom>
-          <Card
-            Icon={AllInbox}
-            color="#291B4F"
-            title="All Tickets"
-            value={"28258"}
-          />
-        </Fade>
-        <Fade right>
-          <Card
-            Icon={Cached}
-            color="#CEEAE6"
-            title="Queued Tickets"
-            value={"8"}
-          />
-        </Fade>
-      </Box>
-      <Divider />
-      {/* Table Container */}
-      <TableContainer
-        component={Paper}
-        elevation={0}
+      <Drawer
+        variant="permanent"
         sx={{
-          maxWidth: 1200,
-          mt: 4,
-          ml: "auto",
-          mr: "auto",
-          mb: 0,
-          bgcolor: "transparent",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
+          "& .MuiPaper-root": {
+            width: DrawerWidth,
+            boxSizing: "border-box"
+          },
+          width: DrawerWidth
         }}
       >
-        <Table
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
           sx={{
-            maxWidth: 1200,
-            minWidth: 800,
-            margin: "auto"
+            ...theme.mixins.toolbar,
+            bgcolor: theme.palette.primary.main
           }}
-          size="small"
         >
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Ticket ID</StyledTableCell>
-              <StyledTableCell>Report Date</StyledTableCell>
-              <StyledTableCell>Ticket Title</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
-              <StyledTableCell>Closing Date</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {dt.map((index, value) => (
-              <StyledTableRow
-                hover
-                // we must pass row id to selected instead of index "next time"
-                selected={selectedID === index}
-                id={index}
-                onContextMenu={(event) => handleRowclick({ event, index })}
-              >
-                <TableCell>#4826</TableCell>
-                <TableCell>2021-06-11</TableCell>
-                <TableCell>
-                  System is not respondingSystem is not respondingSystem is not
-                  respondingSystem is not respondingSystem is not
-                </TableCell>
-                <TableCell>Pending</TableCell>
-                <TableCell>2021-06-12</TableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Pagination count={10} sx={{ mt: 1 }} />
-      </TableContainer>
-      {/* context menu */}
-      <Menu
-        open={Boolean(ctxAnchor)}
-        anchorReference="anchorPosition"
-        anchorPosition={{ top: ctxCoord.y, left: ctxCoord.x }}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right"
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right"
-        }}
-        onClose={(event) => handleCtxClose(event)}
-        PaperProps={{
-          elevation: 1
-        }}
+          <Typography
+            variant="h6"
+            sx={{
+              textTransform: "none",
+              color: "#fff"
+            }}
+            letterSpacing={2}
+            fontWeight="bold"
+          >
+            iREPORT-SYSTEM
+          </Typography>
+        </Box>
+        <List disablePadding>
+          <ListItemButton divider dense>
+            <ListItemIcon>
+              <ConfirmationNumber />
+            </ListItemIcon>
+            <ListItemText>Tickets</ListItemText>
+          </ListItemButton>
+          <ListItemButton
+            dense
+            divider
+            onClick={(event) => handleOpenDrawerMenu(event)}
+          >
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText>Users</ListItemText>
+            {openDrawerMenu ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openDrawerMenu} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton divider dense sx={{ ml: 4 }}>
+                <ListItemIcon>
+                  <AdminPanelSettings />
+                </ListItemIcon>
+                <ListItemText primary="Admins" />
+              </ListItemButton>
+              <ListItemButton divider dense sx={{ ml: 4 }}>
+                <ListItemIcon>
+                  <AssignmentInd />
+                </ListItemIcon>
+                <ListItemText primary="Employees" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+      </Drawer>
+      {/* Content container */}
+      <Box
         sx={{
-          "& .MuiMenu-paper .MuiMenu-list": {
-            padding: 0
-          }
+          ml: "250px"
+          //  bgcolor: "red"
         }}
       >
-        <CtxMenu />
-      </Menu>
-      {/* Notifications test */}
-      <Notification />
-      {/* modal form "ADD NEW TICKET" */}
-      <NewTicket />
+        {/* cards Container */}
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ mt: 7, mb: 4 }}
+        >
+          <Fade left>
+            <Card
+              Icon={BugReport}
+              color="#FCD42B"
+              title="Reported Tickets"
+              value={"15"}
+            />
+          </Fade>
+          <Fade bottom>
+            <Card
+              Icon={AllInbox}
+              color="#291B4F"
+              title="All Tickets"
+              value={"28258"}
+            />
+          </Fade>
+          <Fade right>
+            <Card
+              Icon={Cached}
+              color="#CEEAE6"
+              title="Queued Tickets"
+              value={"8"}
+            />
+          </Fade>
+        </Box>
+        <Divider />
+        {/* Table Container */}
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{
+            // maxWidth: 1200,
+            mt: 4,
+            ml: "auto",
+            mr: "auto",
+            mb: 0,
+            bgcolor: "transparent",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <Table
+            sx={{
+              // maxWidth: 1200,
+              minWidth: 800,
+              margin: "auto"
+            }}
+            size="small"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Ticket ID</StyledTableCell>
+                <StyledTableCell>Ticket Title</StyledTableCell>
+                <StyledTableCell>Owner</StyledTableCell>
+                <StyledTableCell>Report Date</StyledTableCell>
+                <StyledTableCell>Status</StyledTableCell>
+                <StyledTableCell>Closing Date</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {dt.map((index, value) => (
+                <StyledTableRow
+                  hover
+                  // we must pass row id to selected instead of index "next time"
+                  selected={selectedID === index}
+                  id={index}
+                  onContextMenu={(event) => handleRowclick({ event, index })}
+                >
+                  <TableCell>#4826</TableCell>
+                  <TableCell>
+                    System is not respondingSystem is not respondingSyste
+                  </TableCell>
+                  <TableCell>Jim Braynt</TableCell>
+                  <TableCell>2021-06-11</TableCell>
+                  <TableCell>Pending</TableCell>
+                  <TableCell>2021-06-12</TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Pagination count={10} sx={{ mt: 1 }} />
+        </TableContainer>
+        {/* context menu */}
+        <Menu
+          open={Boolean(ctxAnchor)}
+          anchorReference="anchorPosition"
+          anchorPosition={{ top: ctxCoord.y, left: ctxCoord.x }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          onClose={(event) => handleCtxClose(event)}
+          PaperProps={{
+            elevation: 1
+          }}
+          sx={{
+            "& .MuiMenu-paper .MuiMenu-list": {
+              padding: 0
+            }
+          }}
+        >
+          <CtxMenu />
+        </Menu>
+        {/* Notifications test */}
+        <Notification />
+      </Box>
     </>
   );
 }
