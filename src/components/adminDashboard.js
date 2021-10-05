@@ -59,6 +59,7 @@ import { useTheme } from "@mui/material/styles";
 // need to revisit notifications "not finished yet"
 import Notification from "./Notification";
 import Card from "./Card";
+import { PieChart_C, LineChart_C, RadarChart_C } from "./adminCharts";
 import { openNewTicket } from "../redux/actions/actions";
 import { useDispatch } from "react-redux";
 // testing animation with react-reveal
@@ -425,7 +426,7 @@ export default function AdminDashboard({ props }) {
             <ListItemIcon>
               <ConfirmationNumber />
             </ListItemIcon>
-            <ListItemText>Tickets</ListItemText>
+            <ListItemText>Home</ListItemText>
           </ListItemButton>
           <ListItemButton
             dense
@@ -494,6 +495,17 @@ export default function AdminDashboard({ props }) {
               value={"8"}
             />
           </Fade>
+        </Box>
+        <Divider />
+        <Typography variant="h4" textAlign="center" letterSpacing={4}>
+          TICKETS REPORTING ANALYSIS
+        </Typography>
+        <Divider />
+        {/* Chart Container */}
+        <Box display="flex" alignItems="center" sx={{ height: "300px", mt: 2 }}>
+          <LineChart_C />
+          <PieChart_C />
+          <RadarChart_C />
         </Box>
         <Divider />
         {/* Table Container */}
