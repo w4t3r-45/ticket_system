@@ -13,6 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { loginRequest } from "../redux/actions/actions";
+import { Navigate } from "react-router-dom";
 
 const Form = styled("form")({
   display: "flex",
@@ -23,6 +25,8 @@ const Form = styled("form")({
 });
 
 export default function Login(props) {
+  // login situation (if first login)
+  const firstLogin = useSelector((state) => state.ui.firstLogin);
   // theme
   const theme = useTheme();
   //dispatch redux actions
@@ -50,105 +54,110 @@ export default function Login(props) {
 
   //submit for our form
   const submitForm = (data) => {
-    console.log("our data in this form are : ", data);
+    console.log("data from form UI: ", data);
+    dispatch(loginRequest(data));
   };
   return (
     <>
       <CssBaseline />
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ width: "100vw", height: "100vh" }}
-      >
-        <Box sx={{ borderRadius: "15px", overflow: "hidden", height: "50%" }}>
-          {/* //top box */}
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="start"
-            alignItems="center"
-            sx={{
-              width: "400px", //total width
-              height: "70%",
-              bgcolor: theme.palette.primary.main, //blue
-              padding: "20px"
-            }}
-          >
-            <Typography
-              variant="h1"
-              fontSize="1rem"
-              letterSpacing={2}
-              color="white"
-            >
-              Administrator Login
-            </Typography>
-            <Typography
-              variant="subtitle"
-              fontSize="0.9rem"
-              letterSpacing={2}
-              color="white"
-            >
-              - iReport System -
-            </Typography>
-            <Box sx={{ mt: 4 }}>
-              <Adb sx={{ width: "100px", height: "100px", color: "white" }} />
-            </Box>
-          </Box>
-          {/* //bottom box (contains our form) */}
-
-          <Box sx={{ bgcolor: "white", height: "30%", position: "relative" }}>
-            <Paper
-              variant="outlined"
+      {firstLogin ? (
+        <Navigate to="/newpwd" />
+      ) : (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ width: "100vw", height: "100vh" }}
+        >
+          <Box sx={{ borderRadius: "15px", overflow: "hidden", height: "50%" }}>
+            {/* //top box */}
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="start"
+              alignItems="center"
               sx={{
-                position: "absolute",
-                left: "12%",
-                bottom: "40px",
-                width: "300px",
-                borderRadius: "8px"
+                width: "400px", //total width
+                height: "70%",
+                bgcolor: theme.palette.primary.main, //blue
+                padding: "20px"
               }}
             >
-              <Form onSubmit={handleSubmit((data) => submitForm(data))}>
-                <TextField
-                  {...register("email")}
-                  error={Boolean(errors.email)}
-                  helperText={Boolean(errors.email) && errors.email.message}
-                  label="Email"
-                  type="text"
-                  size="small"
-                  sx={{
-                    mb: 1
-                  }}
-                  fullWidth
-                />
-                <TextField
-                  {...register("password")}
-                  error={Boolean(errors.password)}
-                  helperText={
-                    Boolean(errors.password) && errors.password.message
-                  }
-                  label="Password"
-                  type="password"
-                  size="small"
-                  sx={{
-                    mb: 2
-                  }}
-                  fullWidth
-                />
-                <Button
-                  variant="contained"
-                  disableElevation
-                  size="small"
-                  type="submit"
-                  sx={{ width: "100%" }}
-                >
-                  Login
-                </Button>
-              </Form>
-            </Paper>
+              <Typography
+                variant="h1"
+                fontSize="1rem"
+                letterSpacing={2}
+                color="white"
+              >
+                Administrator Login
+              </Typography>
+              <Typography
+                variant="subtitle"
+                fontSize="0.9rem"
+                letterSpacing={2}
+                color="white"
+              >
+                - iReport System -
+              </Typography>
+              <Box sx={{ mt: 4 }}>
+                <Adb sx={{ width: "100px", height: "100px", color: "white" }} />
+              </Box>
+            </Box>
+            {/* //bottom box (contains our form) */}
+
+            <Box sx={{ bgcolor: "white", height: "30%", position: "relative" }}>
+              <Paper
+                variant="outlined"
+                sx={{
+                  position: "absolute",
+                  left: "12%",
+                  bottom: "40px",
+                  width: "300px",
+                  borderRadius: "8px"
+                }}
+              >
+                <Form onSubmit={handleSubmit((data) => submitForm(data))}>
+                  <TextField
+                    {...register("email")}
+                    error={Boolean(errors.email)}
+                    helperText={Boolean(errors.email) && errors.email.message}
+                    label="Email"
+                    type="text"
+                    size="small"
+                    sx={{
+                      mb: 1
+                    }}
+                    fullWidth
+                  />
+                  <TextField
+                    {...register("password")}
+                    error={Boolean(errors.password)}
+                    helperText={
+                      Boolean(errors.password) && errors.password.message
+                    }
+                    label="Password"
+                    type="password"
+                    size="small"
+                    sx={{
+                      mb: 2
+                    }}
+                    fullWidth
+                  />
+                  <Button
+                    variant="contained"
+                    disableElevation
+                    size="small"
+                    type="submit"
+                    sx={{ width: "100%" }}
+                  >
+                    Login
+                  </Button>
+                </Form>
+              </Paper>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </>
   );
 }
